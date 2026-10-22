@@ -1,11 +1,9 @@
 pipeline{
-    agent{
-        label "node"
-    }
+    agent any
     stages{
         stage("Restor dependencies"){
             when{
-                any of{
+                anyOf{
                     branch "main"
                     branch "feature"
                 }
@@ -16,7 +14,7 @@ pipeline{
         }
         stage("Build the project"){
             when{
-                any of{
+                anyOf{
                     branch "main"
                     branch "feature"
                 }
@@ -27,13 +25,13 @@ pipeline{
         }
         stage("Run tests"){
             when{
-                any of{
+                anyOf{
                     branch "main"
                     branch "feature"
                 }
             }
             steps{
-                bat "dornet test --no-build --verbosity normal"
+                bat "dotnet test --no-build --verbosity normal"
             }
         }
     }
